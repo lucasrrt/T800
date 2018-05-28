@@ -1,6 +1,8 @@
+import serial 
 from flask import Flask, request, send_from_directory
-app = Flask(__name__)
 
+ser = serial.Serial('/dev/cu.usbmodem1421', 9600) 
+app = Flask(__name__)
 
 @app.route('/')
 def send_static():
@@ -9,7 +11,17 @@ def send_static():
 
 @app.route("/send_data")
 def send_data():
-    request.args.get('alpha')
-    request.args.get('beta')
-    request.args.get('gamma')
-    request.args.get('touch')
+    alpha = int(float(request.args.get('alpha'))/2)
+    beta = int((float(request.args.get('beta'))+180)/2)
+    gamma = int((float(request.args.get('gamma'))+90))
+    touch = request.args.get("touch")
+    print(alpha)
+    print(beta)
+    print(gamma)
+    
+    ser.write("#")
+    ser.write(str(alpha)+";")
+    ser.write(str(beta)+";")
+    ser.write(str(gamma)+";")
+    ser.write(touch.encode("ascii", "ignore")+";")
+    return "ok"

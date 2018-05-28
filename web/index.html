@@ -11,7 +11,7 @@ document.addEventListener("touchend",function(evt){
 if (window.DeviceOrientationEvent) {
 	window.addEventListener('deviceorientation', function(event) {
 		console.log(event);
-		fetch("/?gamma="+ event.gamma+
+		fetch("/send_data?gamma="+ event.gamma+
 			  "&beta="+event.beta+
 			  "&alpha="+event.alpha+
 			  "&touch="+touch).then(function(data){

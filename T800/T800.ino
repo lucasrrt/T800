@@ -17,7 +17,6 @@ bool closedHand = false;
 
 void setup() {
   // put your setup code here, to run once:
-  Ciao.begin(); 
   
   servo1.attach(10);
   servo3.attach(11);
@@ -32,20 +31,25 @@ void setup() {
 void loop() {
   // put your main code here, to run repeatedly:
   if (Serial.available()){
-    angle1 = Serial.readStringUntil(';');
-    angle4 = Serial.readStringUntil(';');
-    angle5 = Serial.readStringUntil(';');
-    closeHand = Serial.readStringUntil(';');
+    Serial.readStringUntil('#');
+    angle1 = (Serial.readStringUntil(';').toInt()+angle1*0)/1;
+    angle3 = (Serial.readStringUntil(';').toInt()+angle1*0)/1;
+    angle5 = (Serial.readStringUntil(';').toInt()+angle1*0)/1;
+    closedHand = Serial.readStringUntil(';')=="true"?true:false;
+
+    Serial.println(angle5);
+    Serial.println(angle3);
+    Serial.println(angle1);
     
-    //angle6 = closedHand?90:0;
+    angle6 = closedHand?180:0;
   }
-//  servo1.write(angle1);
-//  servo3.write(angle3);
-//  servo4.write(angle4);
-//  servo5.write(angle5);
-//  servo6.write(angle6);
+  servo1.write(angle1);
+  servo3.write(angle3);
+  servo4.write(angle4);
+  servo5.write(angle5);
+  servo6.write(angle6);
 
 
   
-  delay(1000);
+  delay(100);
 }
