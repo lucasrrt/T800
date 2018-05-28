@@ -1,0 +1,22 @@
+<script>
+var handClicked = false;
+document.addEventListener("touchstart",function(evt){
+	console.log("touch start");
+	touch = true;
+});
+document.addEventListener("touchend",function(evt){
+	console.log("touch end");
+	touch = false;
+});
+if (window.DeviceOrientationEvent) {
+	window.addEventListener('deviceorientation', function(event) {
+		console.log(event);
+		fetch("/?gamma="+ event.gamma+
+			  "&beta="+event.beta+
+			  "&alpha="+event.alpha+
+			  "&touch="+touch).then(function(data){
+			console.log(data);
+		});
+	});
+}
+</script>
