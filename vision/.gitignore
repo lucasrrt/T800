@@ -1,1 +1,6 @@
-*.jpg
+calib_dist.npy
+calib_mtx.npy
+calib_ret.npy
+calib_rvecs.npy
+calib_tvecs.npy
+marker.jpg
