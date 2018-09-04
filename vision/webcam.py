@@ -7,6 +7,7 @@ import matplotlib.pyplot as plt
 
 
 my_chain = ikpy.chain.Chain.from_urdf_file("./poppy_ergo.URDF")
+ax = plot_utils.init_3d_figure()
 
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
@@ -52,7 +53,7 @@ while(True):
         target_frame[:3, 3] = target_vector
 
         print("The angles of each joints are : ", my_chain.inverse_kinematics(target_frame))
-        ax = plot_utils.init_3d_figure()
+        ax.cla()
         my_chain.plot(my_chain.inverse_kinematics(target_frame), ax, target=target_vector)
         plt.xlim(-0.1, 0.1)
         plt.ylim(-0.1, 0.1)
