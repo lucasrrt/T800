@@ -30,11 +30,11 @@ while True:
 
     #position = raw_input("prompt")
     print position
-    #position = position.split(" ")
+    position = position.split(" ")
     #print position[0]
-    #for index, servo in enumerate(SERVOS, start=0):
-    #    print "moving servo " + str(PORTS[index])
-    #    pos = float(position[index]) / 180 - 1
-    #    print pos
-    #    servo.value = pos
-    #conn.close()
+    for index, servo in enumerate(SERVOS, start=0):
+        print "moving servo " + str(PORTS[index])
+        pos = float(position[index]) / 180 - 1
+        print pos
+        servo.value = pos
+    conn.close()
