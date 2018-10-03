@@ -1,11 +1,11 @@
 from gpiozero import Servo
 from time import sleep
 
-#ports = [17,27,22,10,9]
-ports = [27,22,10,9]
+#ports = [17, 27, 22, 10, 9]
+ports = [27, 22, 10, 9]
 servos = []
 
-for port in ports:
+for port in ports: 
     print "Appending port " + str(port)
     servos.append(Servo(port))
 
