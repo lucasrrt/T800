@@ -5,10 +5,15 @@ from gpiozero import Servo
 #TCP Connection
 TCP_IP = "192.168.1.9"
 TCP_PORT = 5005
-BUFFER_SIZE = 20
+BUFFER_SIZE = 1024
 
 SOCKET = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 SOCKET.bind((TCP_IP, TCP_PORT))
+
+
+SOCKET.listen(1) #wait for connection
+conn, addr = SOCKET.accept()
+print 'Connection address: ', addr
 
 #Raspberry Connection
 #ports = [17, 27, 22, 10, 9]
@@ -20,21 +25,22 @@ for port in PORTS:
     SERVOS.append(Servo(port))
 
 while True:
-    SOCKET.listen(1) #wait for connection
-    conn, addr = SOCKET.accept()
-    print 'Connection address: ', addr
 
     position = conn.recv(BUFFER_SIZE)
     if not position: break
-    print "received data: ", position
+    print "received data: ", position.decode()
 
     #position = raw_input("prompt")
-    print position
+
     position = position.split(" ")
-    #print position[0]
+    print position
     for index, servo in enumerate(SERVOS, start=0):
         print "moving servo " + str(PORTS[index])
         pos = float(position[index])# / 180 - 1
+        if(pos < -1):
+            pos = -1
+        if(pos > 1):
+            pos = 1
         print pos
         servo.value = pos
-    conn.close()
+conn.close()
